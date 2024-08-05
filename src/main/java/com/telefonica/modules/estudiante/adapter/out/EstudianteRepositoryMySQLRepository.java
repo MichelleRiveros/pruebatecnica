@@ -55,11 +55,12 @@ public class EstudianteRepositoryMySQLRepository implements EstudianteRepository
     @Override
     public void upDate(Estudiante estudiante){
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "UPDATE estudiante SET nombre = ?, especialidad = ?, grado = ?";
+            String query = "UPDATE estudiante SET nombre = ?, especialidad = ?, grado = ? WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1, estudiante.getNombre());
                 statement.setString(2, estudiante.getEspecialidad());
                 statement.setString(3, estudiante.getGrado());
+                statement.setInt(4, estudiante.getId());
                 statement.executeUpdate();
             } 
         } catch (SQLException e) {
